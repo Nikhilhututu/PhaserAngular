@@ -1,0 +1,139 @@
+<!-- <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Phaser Angular</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="assets/js/phaser.min.js"></script>
+  <script src="assets/js/Logo.js"></script>
+	<script src="assets/js/GamePlay.js"></script>
+	<script src="assets/js/Item.js"></script>
+	<script src="assets/js/Circle.js"></script>
+	<script src="assets/js/tween.umd.js"></script>
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+  <div class="loaderbg" id="loaderbg">
+		<svg x="0px" y="0px" viewBox="0 0 1080 1920">
+			<circle id="progressbar" cx="50%" cy="50%" r="60" stroke="white" stroke-width="20" fill="black"	fill-opacity="0"/>
+			<circle id="progressbar" cx="50%" cy="50%" r="60" stroke-dasharray='100,100' stroke="blue" stroke-width="20" fill="blue" fill-opacity="0"/>
+			<text id="load_txt" x="50%" y="65%" font-weight="bold" font-family="CabinMedium" font-size="36" minant-baseline="left" text-anchor="middle" fill="#fff">0%</text>
+		</svg>
+	</div>
+	<style>
+        body {
+          margin: 0px;
+          padding: 0px;
+          background-color: black;
+        }
+        #turn {
+          background-color: white;
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          background-color: white;
+          /* background-image: url('assets/portrait.png'); */
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+          display: none;
+          z-index: 0;
+        }
+        @font-face {
+            font-family: 'CabinMedium'; 
+            src: url('font/CabinMedium.ttf');
+        }
+        .loaderbg {
+          position: fixed;
+          touch-action: none;
+          pointer-events: none;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+        }
+
+        .loaderbg svg {
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          opacity: 1;
+          z-index: 10;
+        }
+
+        #progressbar {
+          transform-origin: 50% 50%;
+          -webkit-animation: rotation 5s infinite linear;
+          animation: rotation 5s infinite linear;
+        }
+        @keyframes rotation {
+          from {
+            transform: rotate(0deg);
+          }
+
+          to {
+            transform: rotate(359deg);
+          }
+        }
+        @-webkit-keyframes rotation {
+          from {
+            -webkit-transform: rotate(0deg);
+          }
+          to {
+            -webkit-transform: rotate(359deg);
+          }
+        }
+      </style>
+
+</head>
+<body>
+    <div id="turn"></div>
+    <div id="gameContainer"></div>
+      <script type="text/javascript">
+        window.onload = function () {
+          window.scrollTo(0, 1);
+          mGame = new Phaser.Game(GameConfig);
+        };
+      </script>
+  <app-root></app-root>
+</body>
+</html> -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Nikhil</title>
+      <base href="/">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="assets/js/style.css" />
+  </head>
+  <script src="assets/js/phaser.min.js"></script>
+  <script src="assets/js/Logo.js"></script>
+  <script src="assets/js/GamePlay.js"></script>
+  <script src="assets/js/Item.js"></script>
+  <script src="assets/js/Circle.js"></script>
+  <script src="assets/js/tween.umd.js"></script>
+  <script>
+      if (global === undefined) {
+        var global = window;
+      }
+  </script>
+<body id="mybody">
+  
+  <app-root></app-root>
+</body>
+<style>
+    #mybody{
+      overflow: hidden;
+    }
+</style>
+</html>
