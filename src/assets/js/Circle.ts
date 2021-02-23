@@ -1,12 +1,14 @@
-class CirlcleView{
+
+export class CirlcleView{
+     x = 0;
+     y = 0;
+     startAng=0;
+     spd=0;
+     alpha=1;
+     radius=0;
      constructor()
      {
-         this.x = 0;
-         this.y = 0;
-         this.startAng=0;
-         this.spd=0;
-         this.alpha=1;
-         this.radius=0;
+         
      }
      Set(_x,_y,_radius,_startang)
      {

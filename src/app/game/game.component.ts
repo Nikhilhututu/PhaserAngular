@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import Phaser from 'phaser';
-import LogoScene from '../../assets/js/Logo';
+import GameScene from '../../assets/js/GamePlay';
 let mGame :any; 
-class InitScene extends Phaser.Scene {
+export class InitScene extends Phaser.Scene {
+      
       maxX=1920;
       maxY=1080;
       GameConfig = {
         type: Phaser.CANVAS, //WEBGL CANVAS
         width: this.maxX,
         height: this.maxY,
-        scene:[InitScene,LogoScene],
+        scene:[InitScene,GameScene],
         audio: {
               disableWebAudio: false
           },
@@ -35,12 +36,13 @@ class InitScene extends Phaser.Scene {
 
   create() {
       console.log("create");
-      this.scene.start('LogoScene');
+      this.scene.start('GameScene');
       // this.scene.add('GameScene', LogoScene, true);
   }
-
   
 }
+// export default {InitScene};
+
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
@@ -58,13 +60,14 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     let mInitscene = new InitScene();
+    
     // GameScene.mGame = this.phaserGame = new Phaser.Game(this.config);
     mGame = new Phaser.Game(mInitscene.GameConfig);
-    console.log(mInitscene.GameConfig+"       "+mGame);
+    console.log(mInitscene.GameConfig+"       ");
   }
 
 }
 
 
-export default {InitScene};
+
 
