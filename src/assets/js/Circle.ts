@@ -1,5 +1,5 @@
 
-export class CirlcleView{
+class CirlcleView{
      x = 0;
      y = 0;
      startAng=0;
@@ -20,3 +20,4 @@ export class CirlcleView{
         this.alpha = 1;
      }
 }
+export default CirlcleView

@@ -1,27 +1,37 @@
 
 import TWEEN  from '../../assets/js/tween.umd';
-import {CirlcleView} from '../../assets/js/Circle';
+import CirlcleView from '../../assets/js/Circle';
 import {Item} from '../../assets/js/Item';
+import {GetGame} from '../../assets/js/Item';
 
 
 let mSel=0,mScrollTY=0
 let mISScroll = false,isTouch=false,isKeyPress=false;
 let _MoveType=-1,mSelect=-1,mCirMove=0;
-let val=0; 
+let mSpdval=0; 
 let mRenderTex:any;
 let mCircle,mItem=[];
 let Counter=0,maxX=0,maxY=0;
 let GameScreen=0;
 let setMusic:boolean = false;
+ 
 const GAMELOGO = 0,GAMEPLAY = 1;
+
  class GameScene extends Phaser.Scene {
 	mText;
 	mTex_Logo;mTex_Btn;mTex_Item=[];mTex_Bg;mTex_Up;mTex_Down;mTex_SldeIn;mTex_SldeOut;
 	Snd_Over;
 	
+	static mListData:any;
 	constructor ()
     {
         super('GameScene');
+		for(let i=0;i<GameScene.mListData.length;i++)
+		{
+			console.log(GameScene.mListData[i].Name+" !!! Location!!  "+GameScene.mListData[i].WheelLocation+"     !!id!!  "+GameScene.mListData[i].Id);
+		}
+		// console.log(GameScene.mListData);
+		
     }
 	preload()
 	{
@@ -33,18 +43,27 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 		LoadImage(this.load,'down.png');
 		LoadImage(this.load,'slidein.png');
 		LoadImage(this.load,'slideout.png');
-		LoadImage(this.load,'AcrobatMission.png');
-		LoadImage(this.load,'3NinjasKickBack.png');
-		LoadImage(this.load,'7thSagaThe.png');
-		LoadImage(this.load,'90MinutesEuropeanPrimeGoal.png');
-		LoadImage(this.load,'2020SuperBaseball.png');
-		LoadImage(this.load,'AaahhRealMonsters.png');
-		LoadImage(this.load,'ABCMondayNightFootball.png');
-		LoadImage(this.load,'AcceleBrid.png');
-		LoadImage(this.load,'AceoNerae.png');
-		LoadImage(this.load,'ACMEAnimationFactory.png');
-		LoadImage(this.load,'AcrobatMission.png');
-				//this.load.audio('gameover' , './assets/sound/gameover.mp3');
+
+		for(let i=0;i<GameScene.mListData.length;i++)
+		{
+			LoadImage2(this.load,GameScene.mListData[i].WheelLocation);	
+		}
+
+		// LoadImage(this.load,'AcrobatMission.png');
+		// LoadImage(this.load,'3NinjasKickBack.png');
+		// LoadImage(this.load,'7thSagaThe.png');
+		// LoadImage(this.load,'90MinutesEuropeanPrimeGoal.png');
+		// LoadImage(this.load,'2020SuperBaseball.png');
+		// LoadImage(this.load,'AaahhRealMonsters.png');
+		// LoadImage(this.load,'ABCMondayNightFootball.png');
+		// LoadImage(this.load,'AcceleBrid.png');
+		// LoadImage(this.load,'AceoNerae.png');
+		// LoadImage(this.load,'ACMEAnimationFactory.png');
+		// LoadImage(this.load,'AcrobatMission.png');
+
+
+		//this.load.audio('gameover' , './assets/sound/gameover.mp3'); load sound
+
 		this.load.on('progress', function (value) {
 			let val = value * 100;
 			document.getElementById('load_txt').textContent = val.toFixed(2)+"%";
@@ -73,17 +92,21 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 		this.mTex_Down   	=	GetImage(this.add,'down.png');
 		this.mTex_SldeIn 	=   GetImage(this.add,'slidein.png');
 		this.mTex_SldeOut 	= 	GetImage(this.add,'slideout.png');
-
-		this.mTex_Item.push(GetImage(this.add,'3NinjasKickBack.png'));
-		this.mTex_Item.push(GetImage(this.add,'7thSagaThe.png'));
-		this.mTex_Item.push(GetImage(this.add,'90MinutesEuropeanPrimeGoal.png'));
-		this.mTex_Item.push(GetImage(this.add,'2020SuperBaseball.png'));
-		this.mTex_Item.push(GetImage(this.add,'AaahhRealMonsters.png'));
-		this.mTex_Item.push(GetImage(this.add,'ABCMondayNightFootball.png'));
-		this.mTex_Item.push(GetImage(this.add,'AcceleBrid.png'));
-		this.mTex_Item.push(GetImage(this.add,'AceoNerae.png'));
-		this.mTex_Item.push(GetImage(this.add,'ACMEAnimationFactory.png'));
-		this.mTex_Item.push(GetImage(this.add,'AcrobatMission.png'));
+		for(let i=0;i<GameScene.mListData.length;i++)
+		{
+			this.mTex_Item.push(GetImage2(this.add,GameScene.mListData[i].WheelLocation));
+		}
+		
+		// this.mTex_Item.push(GetImage(this.add,'3NinjasKickBack.png'));
+		// this.mTex_Item.push(GetImage(this.add,'7thSagaThe.png'));
+		// this.mTex_Item.push(GetImage(this.add,'90MinutesEuropeanPrimeGoal.png'));
+		// this.mTex_Item.push(GetImage(this.add,'2020SuperBaseball.png'));
+		// this.mTex_Item.push(GetImage(this.add,'AaahhRealMonsters.png'));
+		// this.mTex_Item.push(GetImage(this.add,'ABCMondayNightFootball.png'));
+		// this.mTex_Item.push(GetImage(this.add,'AcceleBrid.png'));
+		// this.mTex_Item.push(GetImage(this.add,'AceoNerae.png'));
+		// this.mTex_Item.push(GetImage(this.add,'ACMEAnimationFactory.png'));
+		// this.mTex_Item.push(GetImage(this.add,'AcrobatMission.png'));
 
 		mRenderTex = this.add.renderTexture(0, 0, maxX,maxY);
 		mRenderTex.setDepth(0);
@@ -213,7 +236,7 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 	}
 	GameReset()
 	{
-		mCircle.Set(1.4,0,.7,Item.START_ANGLE);
+		mCircle.Set(1.4,0,.8,Item.START_ANGLE);
 		
 		console.log(" !!!! GameREset!!!"+mItem.length);
 		for(let i=0;i<mItem.length;i++)
@@ -229,9 +252,11 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 	}
 	InitObj()
 	{
-		for(let i=0;i<50;i++)
-			mItem[i] = new Item();
-			mCircle = new CirlcleView();	
+		mCircle = new CirlcleView();	
+		for(let i=0;i<GameScene.mListData.length;i++)
+		mItem[i] = new Item();
+			
+		GetGame(this);
 		this.GameReset();
 		
 	}
@@ -241,7 +266,7 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 		{
 			let _xx      = Math.cos(this.DegreeToRadian(0))*mCircle.radius; 
 			let _x = mCircle.x-_xx;
-			if(CircRectsOverlap(_x,0,floatWidth(this.mTex_Btn.width)*.5,floatHeight(this.mTex_Btn.height)*.25,mItem[i].x,mItem[i].y,.1))
+			if(CircRectsOverlap(_x,mCircle.y,floatWidth(this.mTex_Btn.width)*.5,floatHeight(this.mTex_Btn.height)*.25,mItem[i].x,mItem[i].y,.1))
 			{
 				mSelect = i;
 				console.log("innn Select");
@@ -370,13 +395,12 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 		
 			if(mCircle.x<1.5)
 			{
-				// if(SPEED_FAC>ANG_DIFF)
-				// 	SPEED_FAC = ANG_DIFF;
-				
+				if(Item.SPEED_FAC>Item.ANG_DIFF)
+					Item.SPEED_FAC = Item.ANG_DIFF;
 				if(mCirMove ===0)
-					val  = _MoveType===0?Item.SPEED_FAC:-Item.SPEED_FAC;
-					mCirMove +=val;
-				
+					mSpdval  = _MoveType===0?Item.SPEED_FAC:-Item.SPEED_FAC;
+
+				mCirMove += mSpdval;
 				if(Math.abs(mCirMove)>=(Item.ANG_DIFF))
 				{
 					
@@ -386,7 +410,7 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 					{
 						mCirMove=0;
 					}
-					if(isKeyPress || mSel===0 || mISScroll)
+					else if(isKeyPress || mSel===0 || mISScroll)
 					{
 						isKeyPress = false;
 						isTouch    = false;
@@ -398,7 +422,7 @@ const GAMELOGO = 0,GAMEPLAY = 1;
 				{
 					mSelect=-1;
 				}
-				mCircle.spd = val;
+				mCircle.spd = mSpdval;
 				// console.log("!!!SPD!! "+mCircle.spd);
 				for(let i=0;i<mItem.length;i++)
 					mItem[i].Update(mCircle.x,mCircle.y,mCircle.spd,mCircle.radius);
@@ -443,27 +467,6 @@ document.addEventListener("visibilitychange", function(e) {
 
 });
 
-// FadIn()
-	// {
-	// 	console.log("##########"+"    ");
-	// 	if(mCircle.alpha ===1 )
-	// 	{
-	// 		let fadIn={alpha:1};
-	// 		new TWEEN.Tween(fadIn).to({alpha :.25}
-	// 				,500).easing(TWEEN.Easing.Quartic.In).onUpdate(()=>{
-	// 					if(speed.ySpd===0)
-	// 					{
-	// 						console.log("%%%%"+mCircle.spd+"    "+speed.ySpd);
-	// 						mCircle.alpha=fadIn.alpha;
-	// 					}
-	// 					else	
-	// 						mCircle.alpha =1;
-	// 				}).onComplete(()=>{
-	// 					// complete
-	// 					// console.log("!!!! Complete Spdded!!!!"+"      "+mCircle.spd);
-	// 		}).start();
-	// 	}
-	// }
 function SlideOut()
 {
 	let slide ={x:mCircle.x}
@@ -735,6 +738,14 @@ function LoadImage(load, path) {
 	//  console.log("Index========= "+f_index+"     "+l_index+"     "+name+"     "+"      "+load);
 	load.image(name, path);
 }
+function LoadImage2(load, path) {
+	// path = 'assets/images/' + path;
+	var f_index = path.indexOf("/");
+	var l_index = path.indexOf(".");
+	var name = path.substring(f_index + 1, l_index);
+	//  console.log("Index========= "+f_index+"     "+l_index+"     "+name+"     "+"      "+load);
+	load.image(name, path);
+}
 function LoadSVGImage(load, path) {
 	path = 'assets/' + path;
 	var f_index = path.indexOf("/");
@@ -770,7 +781,20 @@ function GetImage(add, path) {
 	img.setOrigin(.5,.5);
 	img.setVisible(false);
 	return img;
-
+	// console.log("Index========= "+f_index+"     "+l_index+"     "+name+"     "+path);
+}
+function GetImage2(add, path) {
+	// path = 'assets/images/' + path;
+	let f_index = path.indexOf("/");
+	let l_index = path.indexOf(".");
+	
+	let name = path.substring(f_index + 1, l_index);
+	// console.log("Get Image ===== "+name)
+	// let img = add.image(XPos(0), YPos(0), name);
+	let img = add.image(0,0,name);
+	img.setOrigin(.5,.5);
+	img.setVisible(false);
+	return img;
 	// console.log("Index========= "+f_index+"     "+l_index+"     "+name+"     "+path);
 }
 function RandomBoolean() {
